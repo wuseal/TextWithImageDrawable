@@ -3,13 +3,13 @@ an android drawable object which contains text and image
 
 ##使用步骤
 * 在app的构建文件build.gradle中的dependencies中加入下面的代码
- ```
+ ```groove
  
    compile 'wu.seal:textwithimagedrawable:1.0.1'
  
  ```
  现在还需要在build.gradle文件中加上:
- ```
+ ```groove
  
  repositories {
     maven { url "https://dl.bintray.com/wusealking/maven/"}
@@ -22,7 +22,7 @@ an android drawable object which contains text and image
 
 ```java
 
-  ImageView left, right, top, bottom;
+    ImageView left, right, top, bottom;
 
     String mText = "text";
 
