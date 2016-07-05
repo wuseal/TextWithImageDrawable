@@ -43,7 +43,7 @@ an android drawable object which contains text and image
              */
             textWithImageDrawable.setTextColor(getResources().getColor(R.color.text_color_white));
             /**
-             * 设置文字和图像之前的间隔,单位是px
+             * 设置文字和图像之间的间隔,单位是px
              */
             textWithImageDrawable.setImagePadding(DensityUtils.dip2px(5));
             /**
