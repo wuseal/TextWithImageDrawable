@@ -18,6 +18,52 @@ an android drawable object which contains text and image
 
 * 然后就可以直接在代码中使用就可以了
  
+## Api的简单介绍
+
+```java
+
+            /**
+             * 实例化一个同时包含文字和图片的drawable
+             */
+            TextWithImageDrawable textWithImageDrawable = new TextWithImageDrawable(thisActivity);
+            /**
+             * 设置drawable里的文字
+             */
+            textWithImageDrawable.setText(text);
+            /**
+             * 设置drawable里的图像资源
+             */
+            textWithImageDrawable.setImageRes(leftMenuIconResId);
+            /**
+             * 设置drawable中文字的大小,注意此处的单位是sp
+             */
+            textWithImageDrawable.setTextSize(16);
+            /**
+             * 设置文字的颜色
+             */
+            textWithImageDrawable.setTextColor(getResources().getColor(R.color.text_color_white));
+            /**
+             * 设置文字和图像之前的间隔,单位是px
+             */
+            textWithImageDrawable.setImagePadding(DensityUtils.dip2px(5));
+            /**
+             * 设置此drawable的左边填充大小,单位px
+             */
+            textWithImageDrawable.setPaddingLeft(DensityUtils.dip2px(8));
+            /**
+             * 设置此drawable上方填充大小,单位px
+             */
+            textWithImageDrawable.setPaddingTop(DensityUtils.dip2px(6));
+            /**
+             * 设置此drawable的最大文字限制长度
+             */
+            textWithImageDrawable.setMaxTextLength(3);
+            /**
+             * 设置图像和文字的相对位置,此处设置的是图像在文字右边显示
+             */
+            textWithImageDrawable.setImagePosition(TextWithImageDrawable.Position.RIGHT);
+
+```
 ## 使用示例:
 
 ```java
