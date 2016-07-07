@@ -8,13 +8,6 @@ an android drawable object which contains text and image
    compile 'wu.seal:textwithimagedrawable:1.0.1'
  
  ```
- 现在还需要在build.gradle文件中加上:
- ```groove
- 
- repositories {
-    maven { url "https://dl.bintray.com/wusealking/maven/"}
-}
-```
 
 * 然后就可以直接在代码中使用就可以了
  
