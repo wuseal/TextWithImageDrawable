@@ -10,6 +10,9 @@ an android drawable object which contains text and image
  ```
 
 * 然后就可以直接在代码中使用就可以了
+
+##效果图:
+<img src="https://github.com/wuseal/TextWithImageDrawable/blob/master/demo.png?raw=true" alt="alt text" >
  
 ## Api的简单介绍
 
