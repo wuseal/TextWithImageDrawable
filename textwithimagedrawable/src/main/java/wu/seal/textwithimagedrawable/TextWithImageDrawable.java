@@ -7,7 +7,9 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.text.TextPaint;
 import android.util.TypedValue;
 
@@ -33,13 +35,10 @@ public class TextWithImageDrawable extends Drawable {
         PRE, MID, END
     }
 
-    /**
-     * 图片资源
-     */
-    private int imageRes;
+    private Context mContext;
 
 
-    private Bitmap bitmap;
+    private Drawable mDrawable;
 
     /**
      * 文字
@@ -89,7 +88,7 @@ public class TextWithImageDrawable extends Drawable {
     private EllipsizeModel ellipsizeModel = EllipsizeModel.END;
 
     public TextWithImageDrawable(Context context) {
-
+        mContext = context;
         mResources = context.getResources();
         mTextPaint = new TextPaint();
         mTextPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
@@ -122,7 +121,22 @@ public class TextWithImageDrawable extends Drawable {
     }
 
     public void setImageRes(int imageRes) {
-        this.imageRes = imageRes;
+        Drawable drawable;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            drawable = mResources.getDrawable(imageRes, mContext.getTheme());
+        } else {
+            drawable = mResources.getDrawable(imageRes);
+        }
+        setDrawable(drawable);
+    }
+
+    public void setImageBitmap(Bitmap bitmap) {
+        setDrawable(new BitmapDrawable(mResources, bitmap));
+    }
+
+    public void setDrawable(Drawable drawable) {
+        drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+        this.mDrawable = drawable;
         invalidateSelf();
     }
 
@@ -173,22 +187,17 @@ public class TextWithImageDrawable extends Drawable {
 
         int contentHeight = getIntrinsicHeight() - paddingTop - paddingBottom;
         int contentWidth = getIntrinsicWidth() - paddingLeft - paddingRight;
-        if (imageRes != 0) {
-            bitmap = BitmapFactory.decodeResource(mResources, imageRes);
-        } else {
-            bitmap = null;
-        }
-
 
         if (position == Position.LEFT) {
-            if (bitmap != null) {
-                final int bitmapTop = (contentHeight - bitmap.getHeight()) / 2 + paddingTop;
+            if (mDrawable != null) {
+                final int bitmapTop = (contentHeight - mDrawable.getIntrinsicHeight()) / 2 + paddingTop;
                 final int bitmapLeft = this.paddingLeft;
-                canvas.drawBitmap(bitmap, bitmapLeft, bitmapTop, null);
+                canvas.translate(bitmapLeft, bitmapTop);
+                mDrawable.draw(canvas);
 
                 if (isNotEmpty(mText)) {
 
-                    final int left = this.paddingLeft + bitmap.getWidth() + drawablePadding;
+                    final int left = this.paddingLeft + mDrawable.getIntrinsicWidth() + drawablePadding;
                     final int top = (contentHeight - mTextHeight) / 2 + textTopDelBaseLine + paddingTop;
                     canvas.drawText(mText, left, top, mTextPaint);
                 }
@@ -209,21 +218,22 @@ public class TextWithImageDrawable extends Drawable {
                 canvas.drawText(mText, textLeft, textTop, mTextPaint);
             }
 
-            if (bitmap != null) {
+            if (mDrawable != null) {
                 int textWidth = Math.round(mTextPaint.measureText(mText));
                 final int left = paddingLeft + textWidth + drawablePadding;
-                final int top = (contentHeight - bitmap.getHeight()) / 2 + paddingTop;
-                canvas.drawBitmap(bitmap, left, top, null);
+                final int top = (contentHeight - mDrawable.getIntrinsicHeight()) / 2 + paddingTop;
+                canvas.translate(left, top);
+                mDrawable.draw(canvas);
             }
         } else if (position == Position.TOP) {
-            if (bitmap != null) {
-                final int bitmapLeft = (contentWidth - bitmap.getWidth()) / 2 + paddingLeft;
+            if (mDrawable != null) {
+                final int bitmapLeft = (contentWidth - mDrawable.getIntrinsicWidth()) / 2 + paddingLeft;
                 final int bitmapTop = paddingTop;
-                canvas.drawBitmap(bitmap, bitmapLeft, bitmapTop, null);
-
+                canvas.translate(bitmapLeft, bitmapTop);
+                mDrawable.draw(canvas);
                 if (isNotEmpty(mText)) {
                     final int left = Math.round(contentWidth - mTextPaint.measureText(mText)) / 2 + paddingLeft;
-                    final int top = paddingTop + bitmap.getHeight() + drawablePadding + textTopDelBaseLine;
+                    final int top = paddingTop + mDrawable.getIntrinsicHeight() + drawablePadding + textTopDelBaseLine;
                     canvas.drawText(mText, left, top, mTextPaint);
                 }
             } else {
@@ -239,16 +249,18 @@ public class TextWithImageDrawable extends Drawable {
                 final int textTop = paddingTop + textTopDelBaseLine;
                 canvas.drawText(mText, textLeft, textTop, mTextPaint);
 
-                if (bitmap != null) {
-                    final int bitmapLeft = Math.round(paddingLeft + ((contentWidth - bitmap.getWidth()) / 2));
+                if (mDrawable != null) {
+                    final int bitmapLeft = Math.round(paddingLeft + ((contentWidth - mDrawable.getIntrinsicWidth()) / 2));
                     final int bitmapTop = paddingTop + mTextHeight + drawablePadding;
-                    canvas.drawBitmap(bitmap, bitmapLeft, bitmapTop, null);
+                    canvas.translate(bitmapLeft, bitmapTop);
+                    mDrawable.draw(canvas);
                 }
             } else {
-                if (bitmap != null) {
-                    final int bitmapLeft = Math.round(paddingLeft + ((contentWidth - bitmap.getWidth()) / 2));
+                if (mDrawable != null) {
+                    final int bitmapLeft = Math.round(paddingLeft + ((contentWidth - mDrawable.getIntrinsicWidth()) / 2));
                     final int bitmapTop = paddingTop + mTextHeight + drawablePadding;
-                    canvas.drawBitmap(bitmap, bitmapLeft, bitmapTop, null);
+                    canvas.translate(bitmapLeft, bitmapTop);
+                    mDrawable.draw(canvas);
                 }
             }
         }
@@ -272,23 +284,21 @@ public class TextWithImageDrawable extends Drawable {
 
     @Override
     public int getIntrinsicHeight() {
-        int bitmapHeight = 0;
-        if (bitmap == null) {
-            if (imageRes != 0) {
-                bitmap = BitmapFactory.decodeResource(mResources, imageRes);
-            }
-        }
-        if (bitmap != null) {
-            bitmapHeight = bitmap.getHeight();
+
+        int drawableHeight = 0;
+
+        if (mDrawable != null) {
+
+            drawableHeight = mDrawable.getIntrinsicHeight();
         }
 
         if (position == Position.LEFT || position == Position.RIGHT) {
 
-            return Math.max(bitmapHeight, mTextHeight) + paddingTop + paddingBottom;
+            return Math.max(drawableHeight, mTextHeight) + paddingTop + paddingBottom;
 
         } else if (position == Position.TOP || position == Position.BOTTOM) {
 
-            return bitmapHeight + mTextHeight + paddingTop + drawablePadding + paddingBottom;
+            return drawableHeight + mTextHeight + paddingTop + drawablePadding + paddingBottom;
 
         } else {
 
@@ -300,15 +310,10 @@ public class TextWithImageDrawable extends Drawable {
     @Override
     public int getIntrinsicWidth() {
 
-        int bitmapWidth = 0;
+        int drawableWidth = 0;
         int textWidth = 0;
-        if (bitmap == null) {
-            if (imageRes != 0) {
-                bitmap = BitmapFactory.decodeResource(mResources, imageRes);
-            }
-        }
-        if (bitmap != null) {
-            bitmapWidth = bitmap.getWidth();
+        if (mDrawable != null) {
+            drawableWidth = mDrawable.getIntrinsicWidth();
         }
         if (isNotEmpty(mText)) {
             textWidth = Math.round(mTextPaint.measureText(mText));
@@ -316,10 +321,10 @@ public class TextWithImageDrawable extends Drawable {
 
         if (position == Position.LEFT || position == Position.RIGHT) {
 
-            return bitmapWidth + textWidth + paddingLeft + paddingRight + drawablePadding;
+            return drawableWidth + textWidth + paddingLeft + paddingRight + drawablePadding;
         } else if (position == Position.TOP || position == Position.BOTTOM) {
 
-            return Math.max(bitmapWidth, textWidth) + paddingLeft + paddingRight;
+            return Math.max(drawableWidth, textWidth) + paddingLeft + paddingRight;
 
         } else {
             throw new IllegalArgumentException("position not known as one of the [ LEFT,TOP,RIGHT,BOTTOM ]!");

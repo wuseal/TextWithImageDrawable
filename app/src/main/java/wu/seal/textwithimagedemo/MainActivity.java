@@ -43,10 +43,6 @@ public class MainActivity extends AppCompatActivity {
         TextWithImageDrawable drawableBottom = new TextWithImageDrawable(this);
         initDrawable(drawablePadding, drawableBottom, mText, TextWithImageDrawable.Position.BOTTOM);
         bottom.setImageDrawable(drawableBottom);
-
-
-
-
     }
 
     private void initDrawable(int drawablePadding, TextWithImageDrawable drawable, String mText, TextWithImageDrawable.Position position) {
