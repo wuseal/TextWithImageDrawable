@@ -77,9 +77,21 @@ an android drawable object which contains text and image
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        /**
+         *  图像资源显示在文字左边的显示效果
+         */
         left = (ImageView) findViewById(R.id.iv_left);
+        /**
+         *  图像资源显示在文字右边的显示效果
+         */
         right = (ImageView) findViewById(R.id.iv_right);
+        /**
+         *  图像资源显示在文字上边的显示效果
+         */
         top = (ImageView) findViewById(R.id.iv_top);
+        /**
+         *  图像资源显示在文字下边的显示效果
+         */
         bottom = (ImageView) findViewById(R.id.iv_bottom);
 
         /**
