@@ -5,7 +5,7 @@ an android drawable object which contains text and image
 * 在app的构建文件build.gradle中的dependencies中加入下面的代码
  ```groove
  
-   compile 'wu.seal:textwithimagedrawable:1.0.1'
+   compile 'wu.seal:textwithimagedrawable:1.0.2'
  
  ```
 
@@ -27,6 +27,14 @@ an android drawable object which contains text and image
              * 设置drawable里的图像资源
              */
             textWithImageDrawable.setImageRes(leftMenuIconResId);
+             /**
+             * 设置drawable里的图像资源
+             */
+            textWithImageDrawable.setImageBitmap(mBitmap);
+             /**
+             * 设置drawable里的drawable
+             */
+            textWithImageDrawable.setDrawable(mDrawable);
             /**
              * 设置drawable中文字的大小,注意此处的单位是sp
              */
