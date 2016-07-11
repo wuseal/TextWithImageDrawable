@@ -5,7 +5,7 @@ An android drawable object which contains text and image
 * 在app的构建文件build.gradle中的dependencies中加入下面的代码
  ```groove
  
-   compile 'wu.seal:textwithimagedrawable:1.0.2'
+   compile 'wu.seal:textwithimagedrawable:1.0.3'
  
  ```
 
