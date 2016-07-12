@@ -5,6 +5,7 @@ An android drawable object which contains text and image
 
 ##使用步骤
 * 在app的构建文件build.gradle中的dependencies中加入下面的代码
+
  ```groove
  
    compile 'wu.seal:textwithimagedrawable:1.0.3'
@@ -130,6 +131,48 @@ An android drawable object which contains text and image
     }
 
 ```
+
+# BaseCombinedDrawable
+An android drawable object which contains two drawables
+一个组个drawable,能对两个drawable进行拼凑组合成一个新的drawable,两个drawable的位置可以灵活组合,基本能满足所有的drawable的定制,各种图文混排,你懂的
+
+##Api介绍
+
+```java
+
+     /**
+     * 设置drawable two 左上角相对于 drawable one左上角 的相对偏移位置
+     * 偏移以drawable one 的左上角为起始点
+     * drawable one 会优先放在最前面进行绘制(如果两个drawable的相对偏移值为0则效果如同FrameLayout)
+     *
+     * @param relatedX x轴的相对偏移
+     * @param relatedY y轴的相对偏移值
+     */
+     public void setRelatedPosition(int relatedX, int relatedY)
+    
+    
+    /**
+     * 设置组合后的新的drawable的四个Padding值
+     *
+     * @param paddingLeft   左边填充距离
+     * @param paddingTop    上边填充距离
+     * @param paddingRight  右边填充距离
+     * @param paddingBottom 下边填充距离
+     */
+     public void setPadding(int paddingLeft, int paddingTop, int paddingRight, int paddingBottom)
+    
+```
+
+##代码示例
+
+```java
+
+        BaseCombinedDrawable baseCombinedDrawable = new BaseCombinedDrawable(drawableLeft, drawableRight);
+        baseCombinedDrawable.setRelatedPosition(drawableLeft.getIntrinsicWidth() + drawablePadding, 0);
+        combine.setImageDrawable(baseCombinedDrawable);
+
+```
+
 
 ##效果图:
 <img src="https://github.com/wuseal/TextWithImageDrawable/blob/master/demo.png?raw=true" alt="alt text" >

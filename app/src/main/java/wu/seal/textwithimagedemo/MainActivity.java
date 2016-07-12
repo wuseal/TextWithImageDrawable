@@ -5,12 +5,13 @@ import android.os.Bundle;
 import android.util.TypedValue;
 import android.widget.ImageView;
 
+import wu.seal.textwithimagedrawable.BaseCombinedDrawable;
 import wu.seal.textwithimagedrawable.TextWithImageDrawable;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageView left, right, top, bottom;
+    ImageView left, right, top, bottom,combine;
 
     String mText = "text";
 
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         right = (ImageView) findViewById(R.id.iv_right);
         top = (ImageView) findViewById(R.id.iv_top);
         bottom = (ImageView) findViewById(R.id.iv_bottom);
+        combine = (ImageView) findViewById(R.id.iv_combine);
 
         /**
          * 图像和文字之间的距离
@@ -43,6 +45,10 @@ public class MainActivity extends AppCompatActivity {
         TextWithImageDrawable drawableBottom = new TextWithImageDrawable(this);
         initDrawable(drawablePadding, drawableBottom, mText, TextWithImageDrawable.Position.BOTTOM);
         bottom.setImageDrawable(drawableBottom);
+
+        BaseCombinedDrawable baseCombinedDrawable = new BaseCombinedDrawable(drawableLeft, drawableRight);
+        baseCombinedDrawable.setRelatedPosition(drawableLeft.getIntrinsicWidth() + drawablePadding, 0);
+        combine.setImageDrawable(baseCombinedDrawable);
     }
 
     private void initDrawable(int drawablePadding, TextWithImageDrawable drawable, String mText, TextWithImageDrawable.Position position) {
