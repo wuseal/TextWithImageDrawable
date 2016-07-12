@@ -8,7 +8,7 @@ An android drawable object which contains text and image
 
  ```groove
  
-   compile 'wu.seal:textwithimagedrawable:1.0.3'
+   compile 'wu.seal:textwithimagedrawable:1.0.4'
  
  ```
 
