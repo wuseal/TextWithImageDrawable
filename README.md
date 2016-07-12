@@ -134,7 +134,8 @@ An android drawable object which contains text and image
 
 # BaseCombinedDrawable
 An android drawable object which contains two drawables
-一个组个drawable,能对两个drawable进行拼凑组合成一个新的drawable,两个drawable的位置可以灵活组合,基本能满足所有的drawable的定制,各种图文混排,你懂的
+
+一个组合drawable,能对两个drawable进行拼凑组合成一个新的drawable,两个drawable的位置可以灵活组合,基本能满足所有的drawable的定制,各种图文混排,你懂的
 
 ##Api介绍
 
