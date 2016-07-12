@@ -1,5 +1,6 @@
 # TextWithImageDrawable
 An android drawable object which contains text and image
+可以同时包含文字和图像的Drawable,也可以单独只包含文字或是图像
 
 ##使用步骤
 * 在app的构建文件build.gradle中的dependencies中加入下面的代码
